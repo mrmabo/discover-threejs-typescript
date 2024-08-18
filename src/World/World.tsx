@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import createCamera from "./Components/CreateCamera";
-import createCube from "./Components/CreateCube";
+import createCube from "./Components/CreateMesh";
 import createRenderer from "./Systems/Renderer";
 import CreateScene from "./Components/CreateScene";
 import { Resizer } from "./Systems/Resizer";
