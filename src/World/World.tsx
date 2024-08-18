@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import createCamera from "./Components/CreateCamera";
-import createCube from "./Components/CreateMesh";
+import createMesh from "./Components/CreateMesh";
 import createRenderer from "./Systems/Renderer";
 import CreateScene from "./Components/CreateScene";
 import { Resizer } from "./Systems/Resizer";
@@ -14,9 +14,11 @@ const World: React.FC = () => {
     canvas.height = height;
 
     const scene = CreateScene();
-    const cube = createCube();
+    const meshs = createMesh();
 
-    scene.add(cube);
+    meshs.map((mesh) => {
+      return scene.add(mesh);
+    });
 
     const camera = createCamera();
     scene.add(camera);
