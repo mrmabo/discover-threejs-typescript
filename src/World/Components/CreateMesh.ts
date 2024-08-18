@@ -4,7 +4,6 @@ import {
   BufferGeometry,
   Mesh,
   MeshStandardMaterial,
-  Vector3,
 } from "three";
 
 export default function CreateMesh(): Mesh[] {

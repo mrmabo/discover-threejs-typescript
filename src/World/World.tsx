@@ -16,11 +16,11 @@ const World: React.FC = () => {
     canvas.height = height;
 
     const scene = CreateScene();
-    const meshes = createMesh();
+    const meshs = createMesh();
 
     const light = CreateLights();
 
-    meshes.map((mesh: Mesh) => {
+    meshs.map((mesh: Mesh) => {
       return scene.add(mesh, light);
     });
 
@@ -30,13 +30,17 @@ const World: React.FC = () => {
     console.log(scene.children); // the children array contains all objects which we added
 
     const renderer = createRenderer(canvas);
-    new Resizer(canvas, camera, renderer);
+    const resizer = new Resizer(canvas, camera, renderer);
+
+    resizer.onResize = () => {
+      renderer.render(scene, camera);
+    };
 
     function animation(): void {
       requestAnimationFrame(animation);
 
-      meshes[0].rotation.x += 0.01;
-      meshes[0].rotation.y += 0.01;
+      meshs[0].rotation.x += 0.01;
+      meshs[0].rotation.y += 0.01;
       renderer.render(scene, camera);
     }
 

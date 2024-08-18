@@ -6,12 +6,27 @@ class Resizer {
     camera: PerspectiveCamera,
     renderer: WebGLRenderer,
   ) {
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
+    setSize(container, camera, renderer);
+    window.addEventListener("resize", () => {
+      setSize(container, camera, renderer);
 
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+      this.onResize();
+    });
   }
+
+  onResize() {}
 }
+
+const setSize = (
+  container: HTMLElement,
+  camera: PerspectiveCamera,
+  renderer: WebGLRenderer,
+) => {
+  camera.aspect = container.clientWidth / container.clientHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio / 2); // In Retina screener, need to degrade the pixel.
+};
 
 export { Resizer };
