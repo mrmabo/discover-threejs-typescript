@@ -5,23 +5,35 @@ import {
   MathUtils,
   Mesh,
   MeshStandardMaterial,
+  TextureLoader,
 } from "three";
 import { Updateable } from "../Types";
 
 const radiansPerSecond = MathUtils.degToRad(30);
+
+function createMaterial() {
+  const textureLoader = new TextureLoader();
+  const texture = textureLoader.load("../assets/textures/uv-test-bw.png");
+  console.log(2, texture);
+  // const material = new MeshStandardMaterial({ color: "purple" });
+  const material = new MeshStandardMaterial({ map: texture });
+
+  return material;
+}
+
 export default function CreateMesh(): Mesh[] {
   // render mesh as cube
   const cubeGeo = new BoxGeometry(1, 1, 1);
   //  const cubeMaterial = new MeshBasicMaterial(); // MeshBasicMaterial will ignore any light
 
   //  Swith the old "basic" material to a physically correct "standard" material
-  const cubeMaterial = new MeshStandardMaterial({ color: "green" });
-
+  const cubeMaterial = createMaterial();
   const cube = new Mesh(cubeGeo, cubeMaterial);
 
   cube.rotation.set(-0.5, -0.1, 0.8);
 
   (cube as Updateable).tick = (delta: any) => {
+    //    const radiansPerSecond = (2 * Math.PI) / 2;
     cube.rotation.z += radiansPerSecond * delta;
     cube.rotation.x += radiansPerSecond * delta;
     cube.rotation.y += radiansPerSecond * delta;

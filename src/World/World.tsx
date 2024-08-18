@@ -8,7 +8,7 @@ import Loop from "./Systems/Loop";
 import createRenderer from "./Systems/Renderer";
 import { Resizer } from "./Systems/Resizer";
 
-const World: React.FC = () => {
+const World = () => {
   useEffect((): void => {
     const canvas: any = document.getElementById("canvas");
     const width = window.innerWidth;

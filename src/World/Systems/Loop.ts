@@ -25,9 +25,22 @@ class Loop {
   }
 
   start() {
+    let frameCount = 0;
+    let fps = 0;
+    let lastTime = 0;
     this.renderer.setAnimationLoop(() => {
       this.tick();
+      const currentTime = clock.getElapsedTime();
+
       this.renderer.render(this.scene, this.camera);
+      frameCount++;
+      if (currentTime - lastTime >= 1) {
+        fps = frameCount / (currentTime - lastTime);
+        frameCount = 0;
+        lastTime = currentTime;
+
+        console.log(`FPS: ${fps.toFixed(2)} `);
+      }
     });
   }
 
