@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import createCamera from "./Components/CreateCamera";
-import createMesh from "./Components/CreateMesh";
-import createRenderer from "./Systems/Renderer";
-import CreateScene from "./Components/CreateScene";
-import { Resizer } from "./Systems/Resizer";
-import CreateLights from "./Components/CreateLights";
 import { Mesh } from "three";
+import createCamera from "./Components/CreateCamera";
+import CreateLights from "./Components/CreateLights";
+import createMesh from "./Components/CreateMesh";
+import CreateScene from "./Components/CreateScene";
+import Loop from "./Systems/Loop";
+import createRenderer from "./Systems/Renderer";
+import { Resizer } from "./Systems/Resizer";
 
 const World: React.FC = () => {
   useEffect((): void => {
@@ -16,11 +17,11 @@ const World: React.FC = () => {
     canvas.height = height;
 
     const scene = CreateScene();
-    const meshs = createMesh();
+    const meshes = createMesh();
 
     const light = CreateLights();
 
-    meshs.map((mesh: Mesh) => {
+    meshes.map((mesh: Mesh) => {
       return scene.add(mesh, light);
     });
 
@@ -32,19 +33,17 @@ const World: React.FC = () => {
     const renderer = createRenderer(canvas);
     const resizer = new Resizer(canvas, camera, renderer);
 
+    const loop = new Loop(camera, scene, renderer);
+
+    meshes.map((mesh: any) => {
+      return loop.addUpdateable(mesh);
+    });
+
     resizer.onResize = () => {
-      renderer.render(scene, camera);
+      loop.render();
     };
 
-    function animation(): void {
-      requestAnimationFrame(animation);
-
-      meshs[0].rotation.x += 0.01;
-      meshs[0].rotation.y += 0.01;
-      renderer.render(scene, camera);
-    }
-
-    animation();
+    loop.start();
   });
 
   return <canvas id="canvas" />;

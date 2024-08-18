@@ -2,7 +2,7 @@ import { useState } from "react";
 import World from "./World/World";
 
 function App() {
-  const [showWorld, setShowWorld] = useState(false);
+  const [showWorld, setShowWorld] = useState(true);
   const handleClick = () => {
     setShowWorld(true);
   };

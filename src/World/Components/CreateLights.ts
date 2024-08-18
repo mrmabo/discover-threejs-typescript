@@ -1,4 +1,4 @@
-import { DirectionalLight, PointLight } from "three";
+import { DirectionalLight } from "three";
 
 export default function CreateLights() {
   // Create a directional light

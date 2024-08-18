@@ -2,10 +2,13 @@ import {
   BoxGeometry,
   BufferAttribute,
   BufferGeometry,
+  MathUtils,
   Mesh,
   MeshStandardMaterial,
 } from "three";
+import { Updateable } from "../Types";
 
+const radiansPerSecond = MathUtils.degToRad(30);
 export default function CreateMesh(): Mesh[] {
   // render mesh as cube
   const cubeGeo = new BoxGeometry(1, 1, 1);
@@ -17,6 +20,18 @@ export default function CreateMesh(): Mesh[] {
   const cube = new Mesh(cubeGeo, cubeMaterial);
 
   cube.rotation.set(-0.5, -0.1, 0.8);
+
+  (cube as Updateable).tick = (delta: any) => {
+    cube.rotation.z += radiansPerSecond * delta;
+    cube.rotation.x += radiansPerSecond * delta;
+    cube.rotation.y += radiansPerSecond * delta;
+  };
+
+  //(cube as Updateable).tick = () => {
+  //  cube.rotation.z += 0.01;
+  //  cube.rotation.x += 0.01;
+  //  cube.rotation.y += 0.01;
+  //};
 
   // Challenges: using BufferGeometry to render mesh as triangle
   const vertices = new Float32Array([
@@ -44,6 +59,6 @@ export default function CreateMesh(): Mesh[] {
   triangle.rotation.set(-0.1, -0.4, 0.6);
 
   const meshes = [];
-  meshes.push(cube, triangle);
+  meshes.push(cube);
   return meshes;
 }
