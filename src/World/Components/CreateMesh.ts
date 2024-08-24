@@ -13,7 +13,7 @@ const radiansPerSecond = MathUtils.degToRad(30);
 
 function createMaterial() {
   const textureLoader = new TextureLoader();
-  const texture = textureLoader.load("../assets/textures/uv-test-bw.png");
+  const texture = textureLoader.load("/assets/textures/uv-test-bw.png");
   console.log(2, texture);
   // const material = new MeshStandardMaterial({ color: "purple" });
   const material = new MeshStandardMaterial({ map: texture });
